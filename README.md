@@ -2,7 +2,7 @@
 
 **Tunnelier** is a WireGuard VPN connection manager that imports `.conf` files into MongoDB and connects to random VPNs using `wg-quick`. It's built for distributed VPN orchestration and automation in modern cloud-native environments.
 
-[![Test Tunnelier](https://github.com/vulnebify/tunnelier/actions/workflows/test.yaml/badge.svg)](https://github.com/vulnebify/tunnelier/actions/workflows/test.yaml)****
+[![Test Tunnelier](https://github.com/vulnebify/tunnelier/actions/workflows/test.yaml/badge.svg)](https://github.com/vulnebify/tunnelier/actions/workflows/test.yaml)
 
 ---
 
