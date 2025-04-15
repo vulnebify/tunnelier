@@ -1,0 +1,38 @@
+name: Release Tunnelier
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  release:
+    name: Build & Publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+
+      - name: Build with Makefile
+        run: make build
+
+      - name: Generate SHA256 Checksum
+        run: |
+          cd bin
+          sha256sum tunnelier > tunnelier.sha256
+
+      - name: Upload Release Binary & Checksum
+        uses: softprops/action-gh-release@v1
+        with:
+          name: tunnelier
+          tag_name: ${{ github.ref_name }}
+          files: |
+            bin/tunnelier
+            bin/tunnelier.sha256
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
