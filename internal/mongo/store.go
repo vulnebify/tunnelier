@@ -8,7 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var ErrMissingURI = &ConfigError{"TUNNELIER_MONGO_URI not set"}
+var ErrMissingURI = &ConfigError{"TUNNELIER_MONGO_URL not set"}
 
 type ConfigError struct {
 	Msg string

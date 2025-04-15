@@ -70,7 +70,7 @@ var importCmd = &cobra.Command{
 
 func init() {
 	importCmd.Flags().StringVarP(&folder, "folder", "f", ".", "Folder containing .conf files")
-	importCmd.Flags().StringVar(&mongoURL, "mongo-url", "", "MongoDB connection URL (overrides TUNNELIER_MONGO_URI)")
+	importCmd.Flags().StringVar(&mongoURL, "mongo-url", "", "MongoDB connection URL (overrides TUNNELIER_MONGO_URL)")
 	importCmd.Flags().StringVar(&mongoDB, "mongo-db", "tunnelier", "MongoDB database name")
 	importCmd.Flags().StringVar(&mongoCollection, "mongo-collection", "configs", "MongoDB collection name")
 }

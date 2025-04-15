@@ -28,7 +28,7 @@ var upCmd = &cobra.Command{
 
 		url := getMongoURL()
 		if url == "" {
-			return fmt.Errorf("mongo URL must be provided via --mongo-url or TUNNELIER_MONGO_URI")
+			return fmt.Errorf("mongo URL must be provided via --mongo-url or TUNNELIER_MONGO_URL")
 		}
 
 		store, err := mongo.NewClient(ctx, url, mongoDB, mongoCollection)
@@ -75,7 +75,7 @@ var upCmd = &cobra.Command{
 
 func init() {
 	upCmd.Flags().IntVar(&retries, "retries", 3, "Number of random VPN configs to try")
-	upCmd.Flags().StringVar(&mongoURL, "mongo-url", "", "MongoDB connection URL (overrides TUNNELIER_MONGO_URI)")
+	upCmd.Flags().StringVar(&mongoURL, "mongo-url", "", "MongoDB connection URL (overrides TUNNELIER_MONGO_URL)")
 	upCmd.Flags().StringVar(&mongoDB, "mongo-db", "tunnelier", "MongoDB database name")
 	upCmd.Flags().StringVar(&mongoCollection, "mongo-collection", "configs", "MongoDB collection name")
 }

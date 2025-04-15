@@ -6,9 +6,8 @@ import (
 	"os/exec"
 
 	"github.com/spf13/cobra"
+	"github.com/vulnebify/tunnelier/internal"
 )
-
-var Version = "dev"
 
 var (
 	mongoURL        string
@@ -43,7 +42,7 @@ const asciiArt = `
 var rootCmd = &cobra.Command{
 	Use:     "tunnelier",
 	Short:   "Tunnelier is a VPN manager for WireGuard configs stored in MongoDB.",
-	Version: Version,
+	Version: app.Version,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Print(asciiArt)
 		_ = cmd.Help()

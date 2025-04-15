@@ -10,7 +10,7 @@ all: build
 build:
 	mkdir -p $(BUILD_DIR)
 	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 \
-	go build -ldflags "-X=github.com/vulnebify/tunnelier/cmd/tunnelier/main.Version=$(VERSION)" \
+	go build -ldflags "-X=github.com/vulnebify/tunnelier/internal.Version=$(VERSION)" \
 	-o $(BUILD_DIR)/$(APP_NAME) $(CMD_PATH)
 
 clean:
