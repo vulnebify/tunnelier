@@ -30,7 +30,7 @@ jobs:
       - name: Set up Docker Compose
         run: docker compose version || docker-compose version
 
-      - name: Start Mongo
+      - name: Up Docker compose
         run: |
           docker compose up -d
           sleep 5
@@ -38,6 +38,6 @@ jobs:
       - name: Run Tests
         run: go test -v ./cmd/tunnelier
 
-      - name: Stop Redis
+      - name: Down Docker compose
         if: always()
         run: docker compose down
