@@ -18,7 +18,9 @@ RUN apk add --no-cache \
     ca-certificates \
     wireguard-tools \
     iproute2 \
-    iptables
+    iptables \
+    libc6-compat \
+    libnss
 
 WORKDIR /app
 
