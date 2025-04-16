@@ -19,8 +19,7 @@ RUN apk add --no-cache \
     wireguard-tools \
     iproute2 \
     iptables \
-    libc6-compat \
-    libnss
+    libc6-compat 
 
 WORKDIR /app
 
