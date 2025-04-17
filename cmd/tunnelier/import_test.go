@@ -45,7 +45,7 @@ func TestImportCommand_Integration(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	store, err := mongo.NewClient(ctx, mongoURL, mongoDB, mongoCollection)
+	store, err := mongo.NewStore(ctx, mongoURL, mongoDB, mongoCollection)
 	if err != nil {
 		t.Fatalf("Mongo connection failed: %v", err)
 	}

@@ -32,7 +32,7 @@ func TestUpCommand_NoConfigsInDB(t *testing.T) {
 	db := "tunnelier"
 	col := "configs"
 
-	store, err := mongo.NewClient(ctx, mongoURL, db, col)
+	store, err := mongo.NewStore(ctx, mongoURL, db, col)
 	if err != nil {
 		t.Fatalf("Mongo connection failed: %v", err)
 	}
@@ -62,7 +62,7 @@ func TestUpCommand_ConfigFailsToConnect(t *testing.T) {
 	db := "tunnelier"
 	col := "configs"
 
-	store, err := mongo.NewClient(ctx, mongoURL, db, col)
+	store, err := mongo.NewStore(ctx, mongoURL, db, col)
 	if err != nil {
 		t.Fatalf("Mongo connection failed: %v", err)
 	}

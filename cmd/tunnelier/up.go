@@ -31,7 +31,7 @@ var upCmd = &cobra.Command{
 			return fmt.Errorf("mongo URL must be provided via --mongo-url or TUNNELIER_MONGO_URL")
 		}
 
-		store, err := mongo.NewClient(ctx, url, mongoDB, mongoCollection)
+		store, err := mongo.NewStore(ctx, url, mongoDB, mongoCollection)
 		if err != nil {
 			return fmt.Errorf("mongo connection failed: %w", err)
 		}

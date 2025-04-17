@@ -30,7 +30,7 @@ var importCmd = &cobra.Command{
 		defer cancel()
 
 		mongoUrl := getMongoURL()
-		store, err := mongo.NewClient(ctx, mongoUrl, mongoDB, mongoCollection)
+		store, err := mongo.NewStore(ctx, mongoUrl, mongoDB, mongoCollection)
 		if err != nil {
 			return fmt.Errorf("mongo connection error: %w", err)
 		}
