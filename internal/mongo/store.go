@@ -2,8 +2,6 @@ package mongo
 
 import (
 	"context"
-	"fmt"
-	"time"
 
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.mongodb.org/mongo-driver/v2/mongo"
@@ -36,30 +34,12 @@ func NewStore(ctx context.Context, mongoUrl, dbName, collection string) (*Store,
 	if mongoUrl == "" {
 		return nil, ErrMissingURI
 	}
-	var client *mongo.Client
-	var err error
-	delays := []time.Duration{1 * time.Second, 3 * time.Second, 9 * time.Second}
 
 	opts := options.Client().ApplyURI(mongoUrl)
-
-	for i, delay := range delays {
-		client, err = mongo.Connect(opts)
-		if err == nil {
-			// Try pinging to ensure connection is valid
-			pingCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
-			defer cancel()
-			if pingErr := client.Ping(pingCtx, nil); pingErr == nil {
-				break
-			} else {
-				err = pingErr
-			}
-		}
-		fmt.Printf("🔁 MongoDB connect attempt %d failed: %v\n", i+1, err)
-		time.Sleep(delay)
-	}
+	client, err := mongo.Connect(opts)
 
 	if err != nil {
-		return nil, fmt.Errorf("failed to connect to MongoDB after retries: %w", err)
+		return nil, err
 	}
 
 	return &Store{
