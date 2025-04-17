@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"time"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/v2/bson"
+	"go.mongodb.org/mongo-driver/v2/mongo"
+	"go.mongodb.org/mongo-driver/v2/mongo/options"
 )
 
 var ErrMissingURI = &ConfigError{"TUNNELIER_MONGO_URL not set"}
@@ -43,7 +43,7 @@ func NewStore(ctx context.Context, mongoUrl, dbName, collection string) (*Store,
 	opts := options.Client().ApplyURI(mongoUrl)
 
 	for i, delay := range delays {
-		client, err = mongo.Connect(ctx, opts)
+		client, err = mongo.Connect(opts)
 		if err == nil {
 			// Try pinging to ensure connection is valid
 			pingCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
