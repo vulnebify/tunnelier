@@ -3,13 +3,11 @@ package main
 import (
 	"context"
 	"fmt"
-	"os"
-	"os/exec"
-	"path/filepath"
 	"time"
 
 	"github.com/spf13/cobra"
 	"github.com/vulnebify/tunnelier/internal/mongo"
+	"github.com/vulnebify/tunnelier/internal/vpn"
 )
 
 var (
@@ -45,31 +43,12 @@ var upCmd = &cobra.Command{
 			return fmt.Errorf("no VPN configs found")
 		}
 
-		for _, vpn := range confs {
-			tmpPath := filepath.Join(os.TempDir(), fmt.Sprintf("%s.conf", vpn.Name))
-			if err := os.WriteFile(tmpPath, []byte(vpn.Config), 0600); err != nil {
-				fmt.Fprintf(cmd.ErrOrStderr(), "❌ Failed to write config: %s — %v\n", vpn.Name, err)
-				continue
+		for _, vpnConfig := range confs {
+			if vpn.TryWGConnection(cmd.OutOrStdout(), cmd.ErrOrStderr(), vpnConfig.Name, vpnConfig.Config) {
+				return nil
 			}
-
-			_ = exec.Command("wg-quick", "down", tmpPath).Run()
-
-			fmt.Fprintf(cmd.OutOrStdout(), "🚀 Trying VPN: %s\n", vpn.Name)
-
-			wgCmd := exec.Command("wg-quick", "up", tmpPath)
-			wgCmd.Stdout = cmd.OutOrStdout()
-			wgCmd.Stderr = cmd.ErrOrStderr()
-
-			if err := wgCmd.Run(); err != nil {
-				fmt.Fprintf(cmd.ErrOrStderr(), "❌ Failed: %s — %v\n", vpn.Name, err)
-				continue
-			}
-
-			fmt.Fprintf(cmd.OutOrStdout(), "✅ Connected to VPN: %s\n", vpn.Name)
-			return nil
 		}
-
-		return fmt.Errorf("all VPN configs failed")
+		return fmt.Errorf("all VPN configs failed or were not externally reachable")
 	},
 }
 
